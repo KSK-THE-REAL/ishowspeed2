@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Speed Counter ⚡</title>
+
 <style>
 * {
   box-sizing: border-box;
@@ -19,11 +20,12 @@ body {
   background: #090909;
   font-family: Arial, Helvetica, sans-serif;
   color: white;
+  overflow-x: hidden;
 }
 
 .counter {
   width: 95%;
-  max-width: 1000px;
+  max-width: 1100px;
   text-align: center;
   padding: 45px 15px;
   background: linear-gradient(145deg, #191919, #080808);
@@ -39,6 +41,7 @@ body {
   font-style: italic;
   letter-spacing: 3px;
   margin-bottom: 20px;
+  text-shadow: 0 0 15px #ff202066;
 }
 
 .number {
@@ -65,11 +68,11 @@ button {
   font-size: 38px;
   font-weight: bold;
   cursor: pointer;
-  transition: transform .1s;
+  transition: transform 0.1s, background 0.2s;
 }
 
 button:active {
-  transform: scale(.92);
+  transform: scale(0.92);
 }
 
 .add {
@@ -77,31 +80,56 @@ button:active {
   color: white;
 }
 
+.add:hover {
+  background: #ff4545;
+}
+
 .subtract {
   background: #292929;
   color: white;
   border: 2px solid #ff2020;
 }
+
+.subtract:hover {
+  background: #3a3a3a;
+}
+
+@media (max-width: 450px) {
+  .number {
+    letter-spacing: -2px;
+  }
+
+  .counter {
+    padding: 35px 8px;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <div class="counter">
+
   <div class="title">⚡ ISHOWSPEED ⚡</div>
 
-  <div class="number" id="count">2,800,000</div>
+  <div class="number" id="count">2,747,000</div>
 
   <div class="buttons">
-    <button class="subtract" onclick="change(-1)">−</button>
-    <button class="add" onclick="change(1)">+</button>
+    <button class="subtract" onclick="change(-1)"
+      aria-label="Subtract one">−</button>
+
+    <button class="add" onclick="change(1)"
+      aria-label="Add one">+</button>
   </div>
+
 </div>
 
 <script>
-let count = 2800000;
+let count = 2747000;
 
 function change(amount) {
   count = Math.max(0, count + amount);
+
   document.getElementById("count").textContent =
     count.toLocaleString("en-US");
 }
@@ -109,3 +137,4 @@ function change(amount) {
 
 </body>
 </html>
+
