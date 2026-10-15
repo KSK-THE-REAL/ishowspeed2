@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speed Counter ⚡</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #090909;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+}
+
+.counter {
+  width: 95%;
+  max-width: 1000px;
+  text-align: center;
+  padding: 45px 15px;
+  background: linear-gradient(145deg, #191919, #080808);
+  border: 3px solid #ff2020;
+  border-radius: 25px;
+  box-shadow: 0 0 35px #ff202055;
+}
+
+.title {
+  color: #ff2424;
+  font-size: clamp(24px, 5vw, 46px);
+  font-weight: 1000;
+  font-style: italic;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+
+.number {
+  font-size: clamp(48px, 12vw, 125px);
+  font-weight: 1000;
+  letter-spacing: -3px;
+  white-space: nowrap;
+  text-shadow: 0 0 22px #ff202077;
+  margin: 25px 0 35px;
+  font-variant-numeric: tabular-nums;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+button {
+  width: 90px;
+  height: 65px;
+  border: none;
+  border-radius: 14px;
+  font-size: 38px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform .1s;
+}
+
+button:active {
+  transform: scale(.92);
+}
+
+.add {
+  background: #ff2020;
+  color: white;
+}
+
+.subtract {
+  background: #292929;
+  color: white;
+  border: 2px solid #ff2020;
+}
+</style>
+</head>
+<body>
+
+<div class="counter">
+  <div class="title">⚡ ISHOWSPEED ⚡</div>
+
+  <div class="number" id="count">2,800,000</div>
+
+  <div class="buttons">
+    <button class="subtract" onclick="change(-1)">−</button>
+    <button class="add" onclick="change(1)">+</button>
+  </div>
+</div>
+
+<script>
+let count = 2800000;
+
+function change(amount) {
+  count = Math.max(0, count + amount);
+  document.getElementById("count").textContent =
+    count.toLocaleString("en-US");
+}
+</script>
+
+</body>
+</html>
