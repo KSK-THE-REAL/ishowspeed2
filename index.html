@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Speed Counter ⚡</title>
+<title>ISHOWSPEED Counter ⚡</title>
 
 <style>
 * {
@@ -45,7 +45,7 @@ body {
 }
 
 .number {
-  font-size: clamp(48px, 12vw, 125px);
+  font-size: clamp(45px, 12vw, 125px);
   font-weight: 1000;
   letter-spacing: -3px;
   white-space: nowrap;
@@ -94,6 +94,12 @@ button:active {
   background: #3a3a3a;
 }
 
+.saved {
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 22px;
+}
+
 @media (max-width: 450px) {
   .number {
     letter-spacing: -2px;
@@ -109,10 +115,9 @@ button:active {
 <body>
 
 <div class="counter">
-
   <div class="title">⚡ ISHOWSPEED ⚡</div>
 
-  <div class="number" id="count">2,747,000</div>
+  <div class="number" id="count">2,780,000</div>
 
   <div class="buttons">
     <button class="subtract" onclick="change(-1)"
@@ -122,19 +127,58 @@ button:active {
       aria-label="Add one">+</button>
   </div>
 
+  <div class="saved" id="saved">Progress saves automatically</div>
 </div>
 
 <script>
-let count = 2747000;
+const STARTING_COUNT = 2780000;
+const STORAGE_KEY = "ishowspeedCounterProgress";
 
-function change(amount) {
-  count = Math.max(0, count + amount);
+let count = STARTING_COUNT;
 
+try {
+  const savedCount = localStorage.getItem(STORAGE_KEY);
+
+  if (savedCount !== null) {
+    const parsed = Number(savedCount);
+
+    if (Number.isSafeInteger(parsed) && parsed >= 0) {
+      count = parsed;
+    }
+  }
+} catch (error) {
+  console.warn("Progress storage is unavailable.");
+}
+
+function displayCount() {
   document.getElementById("count").textContent =
     count.toLocaleString("en-US");
 }
+
+function change(amount) {
+  const nextCount = count + amount;
+
+  if (nextCount < 0 || !Number.isSafeInteger(nextCount)) {
+    return;
+  }
+
+  count = nextCount;
+  displayCount();
+
+  try {
+    localStorage.setItem(STORAGE_KEY, String(count));
+    document.getElementById("saved").textContent =
+      "✓ Progress saved automatically";
+  } catch (error) {
+    document.getElementById("saved").textContent =
+      "Progress could not be saved in this browser";
+  }
+}
+
+displayCount();
 </script>
 
 </body>
 </html>
+
 
